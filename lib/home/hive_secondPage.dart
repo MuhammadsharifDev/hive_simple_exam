@@ -65,31 +65,36 @@ class _HiveSecondPageState extends State<HiveSecondPage> {
             const SizedBox(
               height: 20,
             ),
-            ListView.builder(
-                shrinkWrap: true,
-                itemCount: taskType.values.length,
-                itemBuilder: (context, index) {
-                  List<Task> item = taskType.values.toList().cast();
-                  return ListTile(
-                    title: Text(item[index].name),
-                    subtitle: Text(item[index].type),
+            SizedBox(
+              height: 400,
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: taskType.values.length,
+                  itemBuilder: (context, index) {
+                    List<Task> item = taskType.values.toList().cast();
+                    return ListTile(
+                      title: Text(item[index].name),
+                      subtitle: Text(item[index].type),
+                      trailing: Text(item[index].coast.toString()),
 
-                  );
-                }
-                ),
+                    );
+                  }
+                  ),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+
+         namedController.clear();
+         typeController.clear();
+         coastController.clear();
+
+          taskType.add(Task(name:namedController.text, type: typeController.text, coast: int.parse(coastController.text)));
           setState(() {
 
           });
-         // namedController.clear();
-         // typeController.clear();
-         // coastController.clear();
-
-          taskType.add(Task(name:namedController.text, type: typeController.text, coast: int.parse(coastController.text)));
         },
         child: const Icon(Icons.add),
       ),
