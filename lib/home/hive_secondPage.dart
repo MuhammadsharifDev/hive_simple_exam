@@ -14,6 +14,7 @@ class _HiveSecondPageState extends State<HiveSecondPage> {
   TextEditingController typeController = TextEditingController();
   TextEditingController coastController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     var taskType = Hive.box("taskType");
@@ -24,74 +25,80 @@ class _HiveSecondPageState extends State<HiveSecondPage> {
           IconButton(onPressed: (){
             setState(() {
             });
-          }, icon: Icon(Icons.delete,color: Colors.red,))
+          }, icon: const Icon(Icons.delete,color: Colors.red,))
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 50,
-            ),
-            TextField(
-              controller: namedController,
-              decoration: const InputDecoration(
-                labelText: 'Name',
-                border: OutlineInputBorder(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 50,
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextField(
-              controller: typeController,
-              decoration: const InputDecoration(
-                labelText: 'Type',
-                border: OutlineInputBorder(),
+              TextField(
+                controller: namedController,
+                decoration: const InputDecoration(
+                  labelText: 'Name',
+                  border: OutlineInputBorder(),
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            TextField(
-              controller: coastController,
-              decoration: const InputDecoration(
-                labelText: 'coast',
-                border: OutlineInputBorder(),
+              const SizedBox(
+                height: 15,
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-              height: 400,
-              child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: taskType.values.length,
-                  itemBuilder: (context, index) {
-                    List<Task> item = taskType.values.toList().cast();
-                    return ListTile(
-                      title: Text(item[index].name),
-                      subtitle: Text(item[index].type),
-                      trailing: Text(item[index].coast.toString()),
+              TextField(
+                controller: typeController,
+                decoration: const InputDecoration(
+                  labelText: 'Type',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              TextField(
+                controller: coastController,
+                decoration: const InputDecoration(
+                  labelText: 'coast',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              SizedBox(
+                height: 400,
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: taskType.values.length,
+                    itemBuilder: (context, index) {
+                      List<Task> item = taskType.values.toList().cast();
+                      return ListTile(
+                        title: Text(item[index].name),
+                        subtitle: Text(item[index].type),
+                        trailing: Text(item[index].coast.toString()),
 
-                    );
-                  }
-                  ),
-            ),
-          ],
+                      );
+                    }
+                    ),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
+          Task newTask=Task(name: namedController.text,
+              type: typeController.text,
+              coast: int.parse(coastController.text));
+          taskType.add(newTask);
 
          namedController.clear();
          typeController.clear();
          coastController.clear();
 
-          taskType.add(Task(name:namedController.text, type: typeController.text, coast: int.parse(coastController.text)));
+
           setState(() {
 
           });

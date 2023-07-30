@@ -6,8 +6,8 @@ import 'package:use_hive/home/home_page.dart';
 
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  final appDocumentory=await getApplicationDocumentsDirectory();
-  Hive.init(appDocumentory.path);
+  final appDocumentary=await getApplicationDocumentsDirectory();
+  Hive.init(appDocumentary.path);
   await Hive.openBox("myBox");
   Hive.registerAdapter(TaskAdapter());
   await Hive.openBox("taskType");
